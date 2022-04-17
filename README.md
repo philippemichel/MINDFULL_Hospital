@@ -1,7 +1,7 @@
 # MINDFULL_ICU
 
 ## Intérêt de la méditation éveillée pour le personnel de réanimation
-### Abirama THIAGARAJAH
+### Abirama T
 
 
 ## Calccas
