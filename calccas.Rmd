@@ -1,0 +1,73 @@
+---
+title: "MINDFULL-ICU"
+subtitle: "Nombre de sujets"
+author: "Philippe MICHEL"
+date: "`r Sys.Date()`"
+output:
+  pdf_document:
+    includes:
+      in_header: tete.tex
+    keep_tex: yes
+    latex_engine: lualatex
+    toc: yes
+  prettydoc::html_pretty:
+    theme: caiman
+    highlight: github
+    toc: yes
+  word_document:
+    toc: yes
+  html_notebook:
+    fig_caption: yes
+    theme: spacelab
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_float: 
+       collapsed: false
+    theme: lumen
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include= FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, cache = FALSE)
+# knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+expx <- FALSE
+```
+
+```{r lib}
+library(baseph)
+library(tidyverse)
+library(see)
+library(epiDisplay)
+library(binom)
+```
+
+Le calcul du nombre de sujet sera fait pour deux approches : 
+
+- Comparaison avant/après pour chaque participant
+- comparaison du groupe  participant à un groupe témoin
+
+En se basant sur l'article de A. M. ASUERO (2014) le score MBI des participants était de 73,4 ± 15,5 avant l'étude & avait baissé à 67,4 après dans le groupe suivi pour un score final de 75,2 dans le groupe témoin. Cette différence de six points semble être suffisante pour améliorer l'état de la personne d'après le ressenti des participants. On se basera donc sur ce chiffre. Un risque $\alpha$ de 5 % & une puissance de 20 % seront retenus. 
+
+# Avant/après
+
+```{r avap}
+zz <- qnorm(0.8)+qnorm(0.95)
+nn <- (2*zz*15.5^2)/5^2
+nn <- floor(1+nn)
+```
+
+
+Il s'agit d'une comparaison de moyennes sur séries appariées. On obtient donc un nombre de cas nécessaires de **`r nn`** par groupe.
+
+# Deux groupes
+
+```{r g2}
+nn <- n.for.2means(75.2,  67.4, 15.5,14.5, alpha = 0.05, power = 0.8)
+nn <- floor(1 + nn$n1 * 1)
+```
+
+
+Le groupe participant devrait avoir une baisse de son score MBI de 5 pour qu'on puisse considérer que la différence a une signification clinique. Le groupe témoin devrait n'avoir aucune modification du score. Les deux groupes auront la même taille. On arrive donc à un chiffre de **`r nn` cas** par groupe.
+
